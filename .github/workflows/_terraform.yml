@@ -23,6 +23,7 @@ jobs:
   terraform:
     name: "${{ inputs.command }} (${{ inputs.environment }})"
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     defaults:
       run:
         working-directory: ${{ inputs.working-directory }}
