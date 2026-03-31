@@ -21,19 +21,15 @@ on:
         type: boolean
         default: false
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   terraform:
-    name: "${{ inputs.command }} (${{ inputs.environment }})"
     runs-on: ubuntu-latest
     environment: ${{ inputs.use-environment && inputs.environment || '' }}
     defaults:
       run:
         working-directory: ${{ inputs.working-directory }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Terraform Init (test)
         run: |
