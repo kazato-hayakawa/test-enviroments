@@ -14,4 +14,4 @@ jobs:
     with:
       environment: dev
       command: apply
-      working-directory: test-infra/envs/dev
+      working-directory: envs/dev

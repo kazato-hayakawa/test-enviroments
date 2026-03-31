@@ -37,7 +37,7 @@ jobs:
     with:
       environment: dev
       command: plan
-      working-directory: test-infra/envs/dev
+      working-directory: envs/dev
 
   plan-dr:
     name: "Plan (dr)"
@@ -46,7 +46,7 @@ jobs:
     with:
       environment: dr
       command: plan
-      working-directory: test-infra/envs/dr
+      working-directory: envs/dr
 
   plan-prd:
     name: "Plan (prd)"
@@ -55,4 +55,4 @@ jobs:
     with:
       environment: prd
       command: plan
-      working-directory: test-infra/envs/prd
+      working-directory: envs/prd
