@@ -16,6 +16,7 @@ jobs:
       environment: dr
       command: apply
       working-directory: envs/dr
+      use-environment: true
 
   # ステップ2: DR成功後、PRD環境へのデプロイ（手動承認が必要）
   apply-prd:
@@ -26,3 +27,4 @@ jobs:
       environment: prd
       command: apply
       working-directory: envs/prd
+      use-environment: true

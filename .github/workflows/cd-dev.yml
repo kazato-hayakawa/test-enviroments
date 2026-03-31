@@ -15,3 +15,4 @@ jobs:
       environment: dev
       command: apply
       working-directory: envs/dev
+      use-environment: true

@@ -15,6 +15,11 @@ on:
         description: "Path to the root module"
         required: true
         type: string
+      use-environment:
+        description: "Enable GitHub Environment approval gate"
+        required: false
+        type: boolean
+        default: false
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -23,7 +28,7 @@ jobs:
   terraform:
     name: "${{ inputs.command }} (${{ inputs.environment }})"
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    environment: ${{ inputs.use-environment && inputs.environment || '' }}
     defaults:
       run:
         working-directory: ${{ inputs.working-directory }}
