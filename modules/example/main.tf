@@ -5,7 +5,7 @@ variable "name" {
 
 variable "version" {
   type    = string
-  default = "1.1.1"
+  default = "1.1.15"
 }
 
 output "greeting" {
