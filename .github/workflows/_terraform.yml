@@ -23,7 +23,6 @@ on:
 
 jobs:
   terraform:
-    name: "${{ inputs.command }} (${{ inputs.environment }})"
     runs-on: ubuntu-latest
     environment: ${{ inputs.use-environment && inputs.environment || '' }}
     defaults:

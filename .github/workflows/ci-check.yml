@@ -40,6 +40,7 @@ jobs:
 
   plan-dev:
     name: "Plan (dev)"
+    if: github.base_ref == 'dev'
     needs: lint
     uses: ./.github/workflows/_terraform.yml
     with:
@@ -49,6 +50,7 @@ jobs:
 
   plan-dr:
     name: "Plan (dr)"
+    if: github.base_ref == 'main'
     needs: lint
     uses: ./.github/workflows/_terraform.yml
     with:
@@ -58,6 +60,7 @@ jobs:
 
   plan-prd:
     name: "Plan (prd)"
+    if: github.base_ref == 'main'
     needs: lint
     uses: ./.github/workflows/_terraform.yml
     with:
