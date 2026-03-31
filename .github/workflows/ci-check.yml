@@ -8,15 +8,23 @@ permissions:
   contents: read
   pull-requests: write
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
-  lint:
-    name: "Lint"
+  branch-check:
+    name: "Branch Policy"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: main へは dev からのみマージ可
+        if: github.base_ref == 'main' && github.head_ref != 'dev'
+        run: |
+          echo "::error::main へのマージは dev ブランチからのみ許可されています (source: ${{ github.head_ref }})"
+          exit 1
+
+  lint:
+    name: "Lint"
+    needs: branch-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
 
       - name: terraform fmt (test)
         run: echo "terraform fmt -check -recursive ... OK"
