@@ -1,0 +1,17 @@
+name: CD Dev
+
+on:
+  push:
+    branches: [dev]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  apply-dev:
+    name: "Apply (dev)"
+    uses: ./.github/workflows/_terraform.yml
+    with:
+      environment: dev
+      command: apply
+      working-directory: test-infra/envs/dev

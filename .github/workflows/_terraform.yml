@@ -1,0 +1,65 @@
+name: Terraform (Reusable)
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: "Target environment (dev, dr, prd)"
+        required: true
+        type: string
+      command:
+        description: "Terraform command (plan or apply)"
+        required: true
+        type: string
+      working-directory:
+        description: "Path to the root module"
+        required: true
+        type: string
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  terraform:
+    name: "${{ inputs.command }} (${{ inputs.environment }})"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Terraform Init (test)
+        run: |
+          echo "========================================="
+          echo "  terraform init"
+          echo "  Environment: ${{ inputs.environment }}"
+          echo "  Directory:   ${{ inputs.working-directory }}"
+          echo "========================================="
+          ls -la
+
+      - name: Terraform ${{ inputs.command }} (test)
+        id: terraform
+        run: |
+          echo "========================================="
+          echo "  terraform ${{ inputs.command }}"
+          echo "  Environment: ${{ inputs.environment }}"
+          echo "========================================="
+          echo "No changes. Your infrastructure matches the configuration."
+
+      - name: Post PR Comment (plan only)
+        if: inputs.command == 'plan' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const output = `#### Terraform Plan - \`${{ inputs.environment }}\` ✅
+            \`\`\`
+            No changes. Your infrastructure matches the configuration.
+            \`\`\`
+            *Directory: \`${{ inputs.working-directory }}\`*`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            });
